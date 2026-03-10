@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha Fuel Fit - Oman</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff6b35;
+            --secondary: #004e89;
+            --accent: #00d9ff;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--darker);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 78, 137, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(0, 217, 255, 0.1) 0%, transparent 50%);
+            z-index: -2;
+            animation: bgPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) translateX(50px); }
+        }
+
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 700;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 50px;
+            position: relative;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .logo-icon {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: dumbbellLift 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.5));
+        }
+
+        @keyframes dumbbellLift {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(-5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-5px) rotate(5deg); }
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            border-radius: 2px;
+        }
+
+        .tagline {
+            color: #888;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .step {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-indicator {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.1rem;
+            background: var(--card-bg);
+            padding: 10px 25px;
+            border-radius: 30px;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            position: relative;
+            border: 1px solid var(--border);
+        }
+
+        .form-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
+
+        .welcome-box {
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .welcome-icon {
+            font-size: 6rem;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+            display: inline-block;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .welcome-title span {
+            display: block;
+        }
+
+        .welcome-title span:last-child {
+            color: var(--accent);
+            font-size: 3rem;
+        }
+
+        .welcome-text {
+            font-size: 1.3rem;
+            color: #aaa;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, var(--primary), #ff8c5a);
+            color: #fff;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.6);
+        }
+
+        .start-btn:hover::before {
+            left: 100%;
+        }
+
+        .gender-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .gender-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border: 2px solid var(--border);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gender-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255, 107, 53, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gender-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
+        }
+
+        .gender-card:hover::before {
+            opacity: 1;
+        }
+
+        .gender-card.selected {
+            border-color: var(--accent);
+            background: linear-gradient(145deg, rgba(0, 217, 255, 0.1), rgba(0, 217, 255, 0.05));
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+        }
+
+        .gender-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .gender-label {
+            font-size: 1.5rem;
+            font-weight: 800;
+            line-height: 1.4;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .service-card.selected {
+            border-color: var(--accent);
+            background: rgba(0, 217, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+        }
+
+        .service-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            color: #000;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .service-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .service-desc {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: #ddd;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            color: #fff;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .input-hint {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .required::after {
+            content: ' *';
+            color: var(--primary);
+        }
+
+        .nutrition-optional {
+            background: rgba(255, 107, 53, 0.05);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .nutrition-title {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .health-section {
+            margin-bottom: 20px;
+        }
+
+        .health-section label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #ccc;
+        }
+
+        .food-category {
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--border);
+        }
+
+        .food-category-title {
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .food-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .food-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .food-item.selected {
+            border-color: var(--accent);
+            background: rgba(0, 217, 255, 0.1);
+        }
+
+        .food-item.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: var(--accent);
+            color: #000;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .food-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .food-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .supplement-category {
+            margin-bottom: 25px;
+            background: rgba(0, 217, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        .supplement-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            padding: 15px;
+            background: rgba(0, 217, 255, 0.1);
+            border-radius: 15px;
+            transition: all 0.3s;
+        }
+
+        .supplement-header:hover {
+            background: rgba(0, 217, 255, 0.2);
+        }
+
+        .supplement-header h3 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            flex: 1;
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .supplement-category.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .supplement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .supplement-category.expanded .supplement-grid {
+            max-height: 1000px;
+        }
+
+        .supplement-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .supplement-item:hover {
+            border-color: var(--primary);
+        }
+
+        .supplement-item.selected {
+            border-color: var(--accent);
+            background: rgba(0, 217, 255, 0.15);
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .duration-selector {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .duration-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            color: #fff;
+            padding: 20px 40px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            position: relative;
+            min-width: 200px;
+        }
+
+        .duration-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .duration-btn.active {
+            border-color: var(--accent);
+            background: rgba(0, 217, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.2);
+        }                <span>9</span>
+            </div>
+
+            <div class="form-box">
+                <h2 class="form-title">
+                    <span class="emoji">💪</span>
+                    <span data-ar="مكملات تستخدمها حالياً" data-en="Supplements You Currently Use">مكملات تستخدمها حالياً</span>
+                </h2>
+                <p style="text-align: center; color: #aaa; margin-bottom: 30px; font-size: 1.1rem;">
+                    <span data-ar="اختر المكملات التي تستخدمها مع نظامك الغذائي والتمارين" data-en="Select supplements you use with your diet and training">اختر المكملات التي تستخدمها مع نظامك الغذائي والتمارين</span>
+                    <span class="emoji">👇</span>
+                </p>
+
+                <div class="supplement-category expanded">
+                    <div class="supplement-header" onclick="toggleSupplementCategory(this)">
+                        <span style="font-size: 1.5rem;">⚡</span>
+                        <h3 data-ar="مكملات الأداء" data-en="Performance Supplements">مكملات الأداء</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="supplement-grid">
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Protein</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Pre-Workout</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Creatine</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">BCAA</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">EAAs</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Glutamine</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Mass Gainers</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Fat Loss</div>
+                    </div>
+                </div>
+
+                <div class="supplement-category">
+                    <div class="supplement-header" onclick="toggleSupplementCategory(this)">
+                        <span style="font-size: 1.5rem;">🍊</span>
+                        <h3 data-ar="الفيتامينات" data-en="Vitamins">الفيتامينات</h3>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="supplement-grid">
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Multivitamin</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Vitamin C</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Vitamin B12</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Vitamin A</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Vitamin E</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Vitamin D</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Zinc</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Magnesium</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Omega 3</div>
+                    </div>
+                </div>
+
+                <div class="supplement-category">
+                    <div class="supplement-header" onclick="toggleSupplementCategory(this)">
+                        <span style="font-size: 1.5rem;">❤️</span>
+                        <h3 data-ar="الصحة العامة" data-en="General Health">الصحة العامة</h3>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="supplement-grid">
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Liver Health</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Joint Health</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Collagen</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Heart Health</div>
+                    </div>
+                </div>
+
+                <div class="supplement-category">
+                    <div class="supplement-header" onclick="toggleSupplementCategory(this)">
+                        <span style="font-size: 1.5rem;">🦁</span>
+                        <h3 data-ar="مكملات خاصة" data-en="Special Supplements">مكملات خاصة</h3>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="supplement-grid">
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">APE</div>
+                        <div class="supplement-item" onclick="toggleSupplement(this, 'current')">Test Booster</div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="prevStep(6)">
+                        <span data-ar="⬅️ رجوع" data-en="Back ⬅️">⬅️ رجوع</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="nextStep(8)">
+                        <span data-ar="التالي ➡️" data-en="Next ➡️">التالي ➡️</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 8: Package Selection -->
+        <div class="step" id="step8">
+            <div class="logo-container">
+                <div class="logo-icon">🏋️‍♂️</div>
+                <div class="logo">Alpha Fuel Fit</div>
+            </div>
+            <div class="step-indicator">
+                <span data-ar="الخطوة" data-en="Step">الخطوة</span>
+                <span>8</span>
+                <span data-ar="من" data-en="of">من</span>
+                <span>9</span>
+            </div>
+
+            <div class="form-box">
+                <h2 class="form-title">
+                    <span class="emoji">💎</span>
+                    <span data-ar="اختر مدة الاشتراك" data-en="Choose Subscription Duration">اختر مدة الاشتراك</span>
+                </h2>
+
+                <div class="duration-selector">
+                    <button class="duration-btn active" onclick="setDuration(1)" id="btn-1month">
+                        <span data-ar="شهر واحد" data-en="1 Month">شهر واحد</span>
+                    </button>
+                    <button class="duration-btn" onclick="setDuration(2)" id="btn-2months">
+                        <span class="discount-badge">23% OFF</span>
+                        <span data-ar="شهرين" data-en="2 Months">شهرين</span>
+                    </button>
+                </div>
+
+                <div id="packageContainer">
+                    <!-- Packages will be generated here -->
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="prevStep(7)">
+                        <span data-ar="⬅️ رجوع" data-en="Back ⬅️">⬅️ رجوع</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="validatePackageAndNext()">
+                        <span data-ar="التالي ➡️" data-en="Next ➡️">التالي ➡️</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 9: Summary & Submit -->
+        <div class="step" id="step9">
+            <div class="logo-container">
+                <div class="logo-icon">🏋️‍♂️</div>
+                <div class="logo">Alpha Fuel Fit</div>
+            </div>
+            <div class="step-indicator">
+                <span data-ar="الخطوة" data-en="Step">الخطوة</span>
+                <span>9</span>
+                <span data-ar="من" data-en="of">من</span>
+                <span>9</span>
+            </div>
+
+            <div class="form-box">
+                <h2 class="form-title">
+                    <span class="emoji">📋</span>
+                    <span data-ar="ملخص الطلب" data-en="Order Summary">ملخص الطلب</span>
+                </h2>
+
+                <div class="calories-display" id="caloriesDisplay">
+                    <div class="calories-number" id="caloriesNumber">0</div>
+                    <div class="calories-label" data-ar="سعرة حرارية يومياً" data-en="Calories per day">سعرة حرارية يومياً</div>
+                </div>
+
+                <div class="summary-box" id="summaryBox">
+                    <!-- Summary will be generated here -->
+                </div>
+
+                <form id="finalForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <input type="hidden" name="gender" id="hiddenGender">
+                    <input type="hidden" name="services" id="hiddenServices">
+                    <input type="hidden" name="duration" id="hiddenDuration">
+                    <input type="hidden" name="package" id="hiddenPackage">
+                    <input type="hidden" name="total_price" id="hiddenPrice">
+                    <input type="hidden" name="calories" id="hiddenCalories">
+                    <input type="hidden" name="selected_foods" id="hiddenFoods">
+                    <input type="hidden" name="previous_supplements" id="hiddenPrevSupps">
+                    <input type="hidden" name="current_supplements" id="hiddenCurrSupps">
+
+                    <!-- Personal Data Hidden Fields -->
+                    <input type="hidden" name="full_name" id="hiddenName">
+                    <input type="hidden" name="age" id="hiddenAge">
+                    <input type="hidden" name="height" id="hiddenHeight">
+                    <input type="hidden" name="current_weight" id="hiddenCurrentWeight">
+                    <input type="hidden" name="target_weight" id="hiddenTargetWeight">
+                    <input type="hidden" name="target_fat" id="hiddenTargetFat">
+                    <input type="hidden" name="phone" id="hiddenPhone">
+                    <input type="hidden" name="email" id="hiddenEmail">
+                    <input type="hidden" name="allergies" id="hiddenAllergies">
+                    <input type="hidden" name="health_issues" id="hiddenHealthIssues">
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(8)">
+                            <span data-ar="✏️ تعديل" data-en="Edit ✏️">✏️ تعديل</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary" style="padding: 22px 70px; font-size: 1.3rem;">
+                            <span data-ar="✅ تأكيد الاشتراك" data-en="✅ Confirm Subscription">✅ تأكيد الاشتراك</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-content">
+            <div class="success-icon">🎉</div>
+            <h2 class="modal-title" data-ar="تم الاشتراك بنجاح!" data-en="Subscription Successful!">تم الاشتراك بنجاح!</h2>
+            <p class="modal-text">
+                <span data-ar="شكراً لاختيارك" data-en="Thank you for choosing">شكراً لاختيارك</span>
+                <strong>Alpha Fuel Fit</strong>
+                <span class="emoji">💪</span><br>
+                <span data-ar="تم إرسال جميع بياناتك إلى فريقنا" data-en="All your data has been sent to our team">تم إرسال جميع بياناتك إلى فريقنا</span><br>
+                <span data-ar="سنتواصل معك خلال 24 ساعة" data-en="We will contact you within 24 hours">سنتواصل معك خلال 24 ساعة</span>
+                <span class="emoji">⚡</span>
+            </p>
+            <div class="modal-contact">
+                <p>📧 Alpha.Fuel.Fit@gmail.com</p>
+            </div>
+            <button class="close-modal" onclick="closeModal()">
+                <span data-ar="تم ✅" data-en="Done ✅">تم ✅</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Data
+        const prices = {
+            1: { workout: 28, nutrition: 26, bench: 30, combo: 47, full: 59 },
+            2: { workout: 43.12, nutrition: 40.04, bench: 46.20, combo: 72.38, full: 90.86 }
+        };
+
+        const packageNames = {
+            ar: {
+                workout: { icon: '🏋️', name: 'تمارين فقط', desc: 'برنامج تدريبي مكثف 💪' },
+                nutrition: { icon: '🥗', name: 'تغذية فقط', desc: 'خطة غذائية مخصصة 🥑' },
+                bench: { icon: '🏋️‍♂️', name: 'بنش برس', desc: 'برنامج تخصصي للبنش 🏆' },
+                combo: { icon: '⭐', name: 'تمارين + تغذية', desc: 'البرنامج الشامل 🌟' },
+                full: { icon: '🌟', name: 'الباقة الكاملة', desc: 'كل شيء + بنش برس 👑' }
+            },
+            en: {
+                workout: { icon: '🏋️', name: 'Workout Only', desc: 'Intensive training program 💪' },
+                nutrition: { icon: '🥗', name: 'Nutrition Only', desc: 'Customized nutrition plan 🥑' },
+                bench: { icon: '🏋️‍♂️', name: 'Bench Press', desc: 'Specialized bench program 🏆' },
+                combo: { icon: '⭐', name: 'Workout + Nutrition', desc: 'Complete program 🌟' },
+                full: { icon: '🌟', name: 'Full Package', desc: 'Everything + Bench Press 👑' }
+            }
+        };
+
+        // State
+        let currentStep = 1;
+        let selectedGender = '';
+        let selectedServices = [];
+        let selectedDuration = 1;
+        let selectedPackage = '';
+        let selectedFoods = {
+            protein: [],
+            carbs: [],
+            vegetables: [],
+            fruits: [],
+            fats: []
+        };
+        let previousSupplements = [];
+        let currentSupplements = [];
+        let currentLang = 'ar';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            updateProgress();
+            generatePackages();
+        });
+
+        // Create background particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Language Switcher
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            
+            // Update all elements with data attributes
+            document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+                el.innerHTML = el.getAttribute('data-' + lang);
+            });
+            
+            // Re-generate packages to update language
+            generatePackages();
+        }
+
+        // Navigation
+        function nextStep(step) {
+            document.getElementById('step' + currentStep).classList.remove('active');
+            document.getElementById('step' + step).classList.add('active');
+            currentStep = step;
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+
+        function prevStep(step) {
+            nextStep(step);
+        }
+
+        function updateProgress() {
+            const progress = (currentStep / 9) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Gender Selection
+        function selectGender(gender) {
+            selectedGender = gender;
+            document.querySelectorAll('.gender-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            setTimeout(() => {
+                nextStep(3);
+            }, 500);
+        }
+
+        // Service Selection
+        function toggleService(service) {
+            const index = selectedServices.indexOf(service);
+            if (index > -1) {
+                selectedServices.splice(index, 1);
+                document.getElementById('card-' + service).classList.remove('selected');
+            } else {
+                selectedServices.push(service);
+                document.getElementById('card-' + service).classList.add('selected');
+            }
+        }
+
+        function validateAndNext(next) {
+            if (selectedServices.length === 0) {
+                alert(currentLang === 'ar' ? 'الرجاء اختيار خدمة واحدة على الأقل' : 'Please select at least one service');
+                return;
+            }
+            nextStep(next);
+        }
+
+        // Personal Data
+        function validatePersonalAndNext() {
+            const form = document.getElementById('personalForm');
+            const requiredFields = form.querySelectorAll('[required]');
+            let valid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    valid = false;
+                    field.style.borderColor = '#ff6b35';
+                } else {
+                    field.style.borderColor = '';
+                }
+            });
+            
+            if (!valid) {
+                alert(currentLang === 'ar' ? 'الرجاء تعبئة جميع الحقول المطلوبة' : 'Please fill all required fields');
+                return;
+            }
+            
+            // Check if nutrition is selected to show food step
+            if (selectedServices.includes('nutrition') || selectedServices.includes('combo') || selectedServices.includes('full')) {
+                nextStep(5);
+            } else {
+                nextStep(6); // Skip food selection if no nutrition
+            }
+        }
+
+        // Food Selection
+        function toggleFood(element, category) {
+            const foodName = element.querySelector('.food-name').getAttribute('data-ar');
+            
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                selectedFoods[category] = selectedFoods[category].filter(f => f !== foodName);
+            } else {
+                element.classList.add('selected');
+                selectedFoods[category].push(foodName);
+            }
+        }
+
+        function validateFoodAndNext() {
+            // Check if at least one food from each category is selected
+            const hasProtein = selectedFoods.protein.length > 0;
+            const hasCarbs = selectedFoods.carbs.length > 0;
+            const hasVeg = selectedFoods.vegetables.length > 0;
+            
+            if (!hasProtein || !hasCarbs || !hasVeg) {
+                alert(currentLang === 'ar' ? 'الرجاء اختيار طعام من البروتينات والكربوهيدرات والخضروات على الأقل' : 'Please select at least one food from proteins, carbs, and vegetables');
+                return;
+            }
+            
+            nextStep(6);
+        }
+
+        // Supplements
+        function toggleSupplementCategory(header) {
+            const category = header.parentElement;
+            category.classList.toggle('expanded');
+            const icon = header.querySelector('.toggle-icon');
+            icon.textContent = categ
+
+        .discount-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+          
